@@ -1,0 +1,29 @@
+<html>
+<head></head>
+	<body>
+			<% unless error_msg.empty? %>
+				<p>
+					<h3><b><%= error_msg %></b></h3>
+				<p>
+			<% end %>
+			<form>
+				<p>
+				Truth Symbol: &nbsp;
+				<input type = 'text' name = 'true' 			/>
+				<p>
+
+				<p>
+				False Symbol: &nbsp;
+				<input type = 'text' name = 'false' 		/>
+				<p>
+
+				<p>
+				Size (2^x): &nbsp;
+				<input type = 'text' name = 'size' 			/>
+				<p>
+			</form>
+			<form action = '/table/:true/:false/:size' method = 'post'>
+				<input type = 'submit' value = 'Show Truth Table' />
+			</form>
+	</body>
+</html>
