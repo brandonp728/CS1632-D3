@@ -1,7 +1,24 @@
 <html>
-  <head></head>
   <body>
-		<%= html %>
+    <table>
+      <tr>
+      <% (table_size - 1).downto(0) do |i| %>
+        <th><%= i %></th>
+      <% end %>
+      <th>And</th>
+      <th>Or</th>
+      <th>Xor</th>
+      </tr>
+      <% for i in 0...num_rows %>
+      <tr>
+      <% for j in 0..num_cols %>
+        <td>
+          <%= table[i][j] %>
+        </td>
+      <% end %>
+      </tr>
+      <% end %>
+    </table>
 		<h2><a href = '/'>Go back to main here</a></h2>
   </body>
 </html>

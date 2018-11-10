@@ -6,23 +6,22 @@
 					<h3><b><%= error_msg %></b></h3>
 				<p>
 			<% end %>
-			<form>
+			<form action = '/table' method = 'get'>
 				<p>
 				Truth Symbol: &nbsp;
-				<input type = 'text' name = 'true' 			/>
+				<input type = 'text' name = 'true_val' 			/>
 				<p>
 
 				<p>
 				False Symbol: &nbsp;
-				<input type = 'text' name = 'false' 		/>
+				<input type = 'text' name = 'false_val' 		/>
 				<p>
 
 				<p>
 				Size (2^x): &nbsp;
 				<input type = 'text' name = 'size' 			/>
 				<p>
-			</form>
-			<form action = '/table/:true/:false/:size' method = 'post'>
+
 				<input type = 'submit' value = 'Show Truth Table' />
 			</form>
 	</body>
