@@ -42,7 +42,7 @@ end
 
 not_found do
   status 404
-  error_msg = 'That page does not exist!'
+  error_msg = 'Invalid Address'
   erb :error, locals: { status: status, error_msg: error_msg }
 end
 
