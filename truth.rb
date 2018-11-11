@@ -2,8 +2,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 
 get '/' do
-  error_msg = ''
-  erb :index, locals: { error_msg: error_msg }
+  erb :index
 end
 
 get '/table' do
@@ -14,38 +13,37 @@ get '/table' do
   false_symbol = 'F' if false_symbol.empty?
   table_size_str = '3' if table_size_str.empty?
   table_size = table_size_str.to_i
+  num_rows = 2**table_size
+  num_cols = table_size + 3
+  error = false
+  error_msg = ''
+
   # Error Messages if:
   # => the true or false symbol are more than a symbol
   # => true == false
   # => table_size is < 2
-  if true_symbol.length > 1 || false_symbol.length > 1
-    error_msg = 'True and False must be single characters'
-    erb :index, locals: { error_msg: error_msg }
-  end
-  if true_symbol == false_symbol
-    error_msg = 'True cannot equal false'
-    erb :index, locals: { error_msg: error_msg }
-  end
-  if table_size < 2
-    error_msg = 'Size must be >= 2'
-    erb :index, locals: { error_msg: error_msg }
-  end
+  error = table_size_less_than_two? table_size
+  error ||= true_eq_false? true_symbol, false_symbol
+  error ||= true_or_false_gt_one? true_symbol, false_symbol
+  error_msg = 'Invalid parameters' if error
 
-  num_rows = 2**table_size
-  num_cols = table_size + 3
-  table = create_table num_rows, num_cols, true_symbol, false_symbol, table_size
+  table = create_table num_rows, num_cols, true_symbol, false_symbol, table_size unless error
+  table = nil if error
 
   erb :table, locals: {
     table: table,
     num_rows: num_rows,
     num_cols: num_cols,
-    table_size: table_size
+    table_size: table_size,
+    error: error,
+    error_msg: error_msg
   }
 end
 
 not_found do
   status 404
-  erb :error, locals: { status: status }
+  error_msg = 'That page does not exist!'
+  erb :error, locals: { status: status, error_msg: error_msg }
 end
 
 def create_table(num_rows, num_cols, true_symbol, false_symbol, table_size)
@@ -86,9 +84,21 @@ end
 def pad_zeroes(str, table_size)
   i = str.length
   str_two = ''
-  while i < table_size do
+  while i < table_size
     str_two += '0'
     i += 1
   end
   str_two + str
+end
+
+def table_size_less_than_two?(table_size)
+  table_size < 2
+end
+
+def true_eq_false?(true_symbol, false_symbol)
+  true_symbol == false_symbol
+end
+
+def true_or_false_gt_one?(true_symbol, false_symbol)
+  true_symbol.length > 1 || false_symbol.length > 1
 end

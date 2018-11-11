@@ -1,12 +1,7 @@
 <html>
 <head></head>
 	<body>
-			<% unless error_msg.empty? %>
-				<p>
-					<h3><b><%= error_msg %></b></h3>
-				<p>
-			<% end %>
-			<form action = '/table' method = 'get'>
+			<form action = '/table' method = 'GET'>
 				<p>
 				Truth Symbol: &nbsp;
 				<input type = 'text' name = 'true_val' 			/>

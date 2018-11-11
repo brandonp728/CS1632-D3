@@ -1,5 +1,6 @@
 <html>
   <body>
+    <% unless error %>
     <table>
       <tr>
       <% (table_size - 1).downto(0) do |i| %>
@@ -19,6 +20,11 @@
       </tr>
       <% end %>
     </table>
+    <% end %>
+    <% if error %>
+    <h1>Error</h1>
+    <%= error_msg %>
+    <% end %>
 		<h2><a href = '/'>Go back to main here</a></h2>
   </body>
 </html>
